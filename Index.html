@@ -10,7 +10,17 @@
 <body id='body'>
     <h1 id="moisReserv">Réservations</h1>
     <hr>
-    <input type="button" value="Generate a table." onclick="generationCalendrier()">
+    <form  action= "" method="get">
+        <div>
+        <label for = "moisConcerne">Mois Concerné</label>
+        <input type = "text"  id="moisConcerne" name="moisConcerne" >
+        </div>
+        <div>
+            <label for = "anneeConcenee">Année concernée</label>
+        <input type="text"  id="anneeConcernee" name="anneeConcernee">
+        </div>
+        <input type="button" value="Générer le Calendrier" onclick="generationCalendrier()">
+    </form>
     <script src="tableau.js"></script>
 </body>
 </html>

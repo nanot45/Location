@@ -9,8 +9,14 @@ function generationCalendrier(){
     var compteurJour = 0;
     var compteurVide = 0;
 
+    //  Récupération des données du Formulaire
+    var moisSaisi = document.getElementById('moisConcerne').value;
+    var anneeSaisie = document.getElementById('anneeConcernee').value;
+    var dateConcernee = anneeSaisie + "/" + moisSaisi + "/01";
+
+
     //  Récupération des éléments de la date
-    var premierJourMois = new Date("2022/04/01");
+    var premierJourMois = new Date(dateConcernee);
     var jourSem = premierJourMois.getDay();
     var numMois = premierJourMois.getMonth() + 1 ;
     var numAnnee = premierJourMois.getFullYear();
