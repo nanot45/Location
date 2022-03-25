@@ -14,10 +14,11 @@ table {
 } */
 
 th, td {
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: 1px solid #000;
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height:10px;
+    font-size: small;
 }
 
 th {
@@ -25,11 +26,11 @@ th {
 }
 
 .horsMois{
-    background-color: grey;
+    background-color: rgb(174, 210, 245);
 }
 
 .moisEnCours{
-    background-color: aquamarine;
+    background-color: rgb(244, 245, 241);
 }
 
 #moisReserv{
