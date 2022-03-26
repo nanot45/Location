@@ -1,8 +1,14 @@
 function generationCalendrier(){
     // appel à la balise "body"
     var body = document.getElementsByTagName("body")[0];
+
+    //  Suppression des lignes existantes
+    // var elementSuppr = document.getElementsByTagName('table');
+    // var elementDom = document.body;
+    // elementDom.removeChild('table');
+
     //  creation de <table> et <tbody>
-    var tbl = document.createElement("table");
+    var tbl = document.getElementById("calendrier");
     var tblBody = document.createElement("tbody");
     var tabLibelMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
     var initJour = ['L', 'M', 'M', 'J','V', 'S', 'D'];
@@ -48,10 +54,10 @@ function generationCalendrier(){
 
         for (var CompteurCell=0; CompteurCell < 7; CompteurCell++){
             //  Création de la ligne d'entete du calendrier
-            if(compteurLigne == 0){
-                var cell = document.createElement("th");
-                var cellText = document.createTextNode(initJour[CompteurCell]);
-            }else{
+            // if(compteurLigne == 0){
+            //     var cell = document.createElement("th");
+            //     var cellText = document.createTextNode(initJour[CompteurCell]);
+            // }else{
                 //  Création du corps du calendrier
                 var cell = document.createElement("td");
                 //  Renseigne les jours précédent le 1er  du mois
@@ -82,7 +88,7 @@ function generationCalendrier(){
                     // td.setAttributeNode(cl_horsMois);
                     //  Ecrit le quantième du jour
                     var cellText = document.createTextNode(compteurJour);
-                }
+                // }
             }
 
             cell.appendChild(cellText);
