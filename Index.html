@@ -12,15 +12,29 @@
     <hr>
     <form  action= "" method="get">
         <div>
-        <label for = "moisConcerne">Mois Concerné</label>
-        <input type = "text"  id="moisConcerne" name="moisConcerne" >
+            <label for = "moisConcerne">Mois Concerné</label>
+            <select name="moisConcerne" id="moisConcerne">
+                <option value="1">Janvier</option>
+                <option value="2">Février</option>
+                <option value="3">Mars</option>
+                <option value="4">Avril</option>
+                <option value="5">Mai</option>
+                <option value="6">Juin</option>
+                <option value="7">Juillet</option>
+                <option value="8">Août</option>
+                <option value="9">Septembre</option>
+                <option value="10">Octobre</option>
+                <option value="11">Novembre</option>
+                <option value="12">Décembre</option>
+            </select>
         </div>
         <div>
             <label for = "anneeConcenee">Année concernée</label>
-        <input type="text"  id="anneeConcernee" name="anneeConcernee">
+            <input type="text"  id="anneeConcernee" name="anneeConcernee">
         </div>
-        <input type="button" value="Générer le Calendrier" onclick="generationCalendrier()">
+            <input type="button" value="Générer le Calendrier" onclick="generationCalendrier()">
     </form>
+    <!-- Création de l'entete du calendrier' -->
     <table id="calendrier">
         <thead>
             <th>L</th>

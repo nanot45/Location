@@ -1,33 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr"> <!-- AAminimumHTML.html -->
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+		<title>Ici mon titre</title>
+		<style>
+                        /* ********************************************************************************** */
+h1 {
+    text-align: center;
+}
+ 
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid red;
+    text-align: center;
+}
+ 
+th, td {
+    padding: 5px 10px;
+    border: 1px solid #000;
+    width: 10px;
+    height:10px;
+    font-size: small;
+}
+ 
+th {
+    background-color: aquamarine;
+}
+ 
+ 
+.horsMois{
+    background-color: rgb(174, 210, 245);
+}
+ 
+.moisEnCours{
+    background-color: white;
+}
+ 
+#moisReserv{
+    color:red;
+}
+ 
+.saisie{
+    width: 10px;
+}
+                </style>
+	</head>
+<body id="body">
+    <h1 id="moisReserv">Réservations</h1>
+    <hr>
+    <form  action= "" method="get">
+        <div>
+        <label for = "moisConcerne">Mois Concerné</label>
+        <input type = "text"  id="moisConcerne" name="moisConcerne" >
+        </div>
+        <div>
+            <label for = "anneeConcenee">Année concernée</label>
+        <input type="text"  id="anneeConcernee" name="anneeConcernee">
+        </div>
+        <input type="button" value="Générer le Calendrier" onclick="generationCalendrier()">
+    </form>
+    <!-- Création de l'entete du calendrier' -->
+    <table id="calendrier">
+        <thead>
+            <th>L</th>
+            <th>M</th>
+            <th>M</th>
+            <th>J</th>
+            <th>V</th>
+            <th>S</th>
+            <th>D</th>
+        </thead>
+    </table>
+		<script>
+                        'use strict'; // force la déclaration des variables
+                        //*********************************************************************************** 
 function generationCalendrier(){
     // appel à la balise "body"
     var body = document.getElementsByTagName("body")[0];
-
+ 
       //  creation de <table> et <tbody>
     var tbl = document.getElementById("calendrier");
     var tblBody = document.createElement("tbody"); 
-    
+ 
     //  Suppression des lignes existantes
     var totalLigneCalendrier = tbl.rows.length;
     if(totalLigneCalendrier>1){
+        // var Parent = document.getElementById(tableID);
        for(var compteurLigne = 1; compteurLigne <totalLigneCalendrier ;compteurLigne++){
            tbl.deleteRow(totalLigneCalendrier-compteurLigne);
        }
     }
-    
+ 
+ 
     var tabLibelMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    // var initJour = ['L', 'M', 'M', 'J','V', 'S', 'D'];
     var compteurJour = 0;
     var compteurVide = 0;
-    var finMois = false;
-
+ 
     //  Récupération des données du Formulaire
     var moisSaisi = document.getElementById('moisConcerne').value;
     var anneeSaisie = document.getElementById('anneeConcernee').value;
     var dateConcernee = anneeSaisie + "/" + moisSaisi + "/01";
-
+ 
     //  Récupération des éléments de la date
     var premierJourMois = new Date(dateConcernee);
     var jourSem = premierJourMois.getDay();
-
+ 
     //  Création du tableau des jours Max par mois
     if (anneeSaisie % 4 == 0){
         //  Année Bissextile
@@ -36,33 +115,34 @@ function generationCalendrier(){
         //  Année standard
         var nbJoursDuMois = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     }
-
+ 
     //  Récupération du nombre de jours à traiter dans le calendrier
     var nbJoursEnCours = nbJoursDuMois[moisSaisi];
     var nbJoursPrecedent = nbJoursDuMois[moisSaisi - 1];
-
+ 
     document.getElementById('moisReserv').innerHTML = 'Réservation du mois de ' + tabLibelMois[moisSaisi - 1];
     // Creation du tableau
     for (var compteurLigne = 0;compteurLigne < 6; compteurLigne++){
         // creation des lignes du tableau
         var row = document.createElement("tr");
-
+ 
         for (var CompteurCell=0; CompteurCell < 7; CompteurCell++){
                 //  Création du corps du calendrier
                 var cell = document.createElement("td");
                 var idCell = "" + compteurLigne + CompteurCell;
-                //  Affectation de l'id et de la class
                 cell.setAttribute("id", idCell);
-                cell.setAttribute("class", "moisEnCours");
-                cell.className = "moisEnCours";
-                
+                //document.getElementById(idCell).setAttribute("class","moisEnCours");
+                //document.getElementById(idCell).className="moisEnCours";
+                cell.setAttribute("class","moisEnCours");
+                cell.className="moisEnCours";
+ 
                 //  Renseigne les jours précédant le 1er  du mois
                 if(compteurVide != jourSem -1){
-                    //  Bascule le dimanche en fin de semaine
                     if(jourSem == 0){
                         jourSem = 7;
                     }
-                    //  Colorie le fond de la cellule en bleu
+                    //  Colorie le fond de la cellule en gris
+                    //document.getElementById(idCell).classList.replace("moisEnCours","horsMois");
                     cell.classList.replace("moisEnCours","horsMois");
                     //  Ecrit le quantième du jour
                     var cellText = document.createTextNode(nbJoursPrecedent - ((jourSem - 2) - compteurVide));
@@ -70,30 +150,26 @@ function generationCalendrier(){
                 // Renseigne les jours du mois
                 }else if (compteurVide == jourSem && compteurJour == 0){
                     compteurJour = 1
-                    finMois = false;
-                    //  Affecte la class et écrit le quantième du jour
-                    cell.classList.replace("horsMois","moisEnCours");
+                    //  Ecrit le quantième du jour
                     var cellText = document.createTextNode(compteurJour);
                 //  Renseigne les cellules vides pour compléter le calendrier apres le dernier jour du mois
                 }else{
                     if (compteurJour == nbJoursEnCours){
                         compteurJour = 1;
-                        
-                        finMois = true;
+                        //document.getElementById(idCell).classList.replace("moisEnCours","horsMois");
                         cell.classList.replace("moisEnCours","horsMois");
-                    }else {
+                   }else {
                         compteurJour++;  
-                        if (finMois = true){
+                        if (compteurJour < nbJoursEnCours){
+                            //document.getElementById(idCell).classList.replace("moisEnCours","horsMois");
                             cell.classList.replace("moisEnCours","horsMois");
-                        }else{
-                            cell.classList.replace("horsMois", "moisEnCours");
                         }
                     }
                     //  Ecrit le quantième du jour
                     var cellText = document.createTextNode(compteurJour);
                 // }
             }
-
+ 
             cell.appendChild(cellText);
             row.appendChild(cell);
         }
@@ -102,9 +178,13 @@ function generationCalendrier(){
 tbl.appendChild(tblBody);
 body.appendChild(tbl);
 tbl.setAttribute("border", "2");
-
+ 
 }
-
+ 
 // function getNbJours(date){
 //     return new Date(date.getFullYear(), date.getMonth() + 1, -1).getDate() + 1;
 // }
+                        //---------------------------------------------------------------------------------------
+                </script>
+</body>
+</html>
