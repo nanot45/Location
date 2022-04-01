@@ -18,6 +18,7 @@ function generationCalendrier(){
     var compteurJour = 0;
     var compteurVide = 0;
     var finMois = false;
+    var moisSuivant = false;
 
     //  Récupération des données du Formulaire
     var moisSaisi = document.getElementById('moisConcerne').value;
@@ -50,7 +51,7 @@ function generationCalendrier(){
         for (var CompteurCell=0; CompteurCell < 7; CompteurCell++){
                 //  Création du corps du calendrier
                 var cell = document.createElement("td");
-                var idCell = "" + compteurLigne + CompteurCell;
+                var idCell = `${compteurLigne}${CompteurCell}`;
                 //  Affectation de l'id et de la class
                 cell.setAttribute("id", idCell);
                 cell.setAttribute("class", "moisEnCours");
@@ -63,33 +64,43 @@ function generationCalendrier(){
                         jourSem = 7;
                     }
                     //  Colorie le fond de la cellule en bleu
-                    cell.classList.replace("moisEnCours","horsMois");
+                    // cell.classList.replace("moisEnCours","horsMois");
+                    finMois=true;
                     //  Ecrit le quantième du jour
                     var cellText = document.createTextNode(nbJoursPrecedent - ((jourSem - 2) - compteurVide));
                     compteurVide ++;
                 // Renseigne les jours du mois
                 }else if (compteurVide == jourSem && compteurJour == 0){
                     compteurJour = 1
-                    finMois = false;
                     //  Affecte la class et écrit le quantième du jour
-                    cell.classList.replace("horsMois","moisEnCours");
+                    // cell.classList.replace("horsMois","moisEnCours");
+                    finMois = false;
                     var cellText = document.createTextNode(compteurJour);
-                //  Renseigne les cellules vides pour compléter le calendrier apres le dernier jour du mois
+                    //  Renseigne les cellules vides pour compléter le calendrier apres le dernier jour du mois
                 }else{
                     if (compteurJour == nbJoursEnCours){
-                        compteurJour = 1;
-                        
-                        finMois = true;
-                        cell.classList.replace("moisEnCours","horsMois");
+                        finMois =true;
+                        compteurJour = 1;            
+                        moisSuivant = true
+                        // cell.classList.replace("moisEnCours","horsMois");
                     }else {
-                        compteurJour++;  
-                        if (finMois = true){
-                            cell.classList.replace("moisEnCours","horsMois");
+                        compteurJour++;
+                        // finMois = false;  
+                        if (finMois == true){
+                            moisSuivant = true;
                         }else{
-                            cell.classList.replace("horsMois", "moisEnCours");
+                            moisSuivant = false;
                         }
+                        // if (compteurJour <= nbJoursEnCours && finMois == false){
+                        // }else{
+                        // }
                     }
                     //  Ecrit le quantième du jour
+                    if(moisSuivant == false){
+                        cell.classList.replace("horsMois","moisEnCours");
+                    }else {
+                        cell.classList.replace("moisEnCours","horsMois");
+                    }
                     var cellText = document.createTextNode(compteurJour);
                 // }
             }
