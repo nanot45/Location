@@ -16,10 +16,11 @@ function generationCalendrier(){
     
     var tabLibelMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
     var compteurJour = 0;
-    var compteurVide = 0;
-    var finMois = false;
+    var compteurHorsMois = 0;
+    // var finMois = false;
     var moisSuivant = false;
-
+    var moisCourant = false;
+    
     //  Récupération des données du Formulaire
     var moisSaisi = document.getElementById('moisConcerne').value;
     var anneeSaisie = document.getElementById('anneeConcernee').value;
@@ -40,6 +41,9 @@ function generationCalendrier(){
 
     //  Récupération du nombre de jours à traiter dans le calendrier
     var nbJoursEnCours = nbJoursDuMois[moisSaisi];
+    if(moisSaisi = 1){
+        moisSaisi = 13
+    }
     var nbJoursPrecedent = nbJoursDuMois[moisSaisi - 1];
 
     document.getElementById('moisReserv').innerHTML = 'Réservation du mois de ' + tabLibelMois[moisSaisi - 1];
@@ -58,51 +62,43 @@ function generationCalendrier(){
                 cell.className = "moisEnCours";
                 
                 //  Renseigne les jours précédant le 1er  du mois
-                if(compteurVide != jourSem -1){
+                if(compteurHorsMois != jourSem -1){
                     //  Bascule le dimanche en fin de semaine
                     if(jourSem == 0){
                         jourSem = 7;
                     }
                     //  Colorie le fond de la cellule en bleu
-                    // cell.classList.replace("moisEnCours","horsMois");
-                    finMois=true;
+                    cell.classList.replace("moisEnCours","horsMois");
                     //  Ecrit le quantième du jour
-                    var cellText = document.createTextNode(nbJoursPrecedent - ((jourSem - 2) - compteurVide));
-                    compteurVide ++;
+                    var cellText = document.createTextNode(nbJoursPrecedent - ((jourSem - 2) - compteurHorsMois));
+                    compteurHorsMois ++;
+                    if (compteurHorsMois == jourSem - 1){
+                        moisCourant=true;
+                    }
                 // Renseigne les jours du mois
-                }else if (compteurVide == jourSem && compteurJour == 0){
+                }else if (compteurHorsMois == jourSem - 1 && compteurJour == 0){
                     compteurJour = 1
                     //  Affecte la class et écrit le quantième du jour
-                    // cell.classList.replace("horsMois","moisEnCours");
-                    finMois = false;
+
                     var cellText = document.createTextNode(compteurJour);
+                    compteurJour ++;
                     //  Renseigne les cellules vides pour compléter le calendrier apres le dernier jour du mois
                 }else{
                     if (compteurJour == nbJoursEnCours){
-                        finMois =true;
                         compteurJour = 1;            
+                        moisCourant =false;
                         moisSuivant = true
-                        // cell.classList.replace("moisEnCours","horsMois");
-                    }else {
-                        compteurJour++;
-                        // finMois = false;  
-                        if (finMois == true){
-                            moisSuivant = true;
-                        }else{
-                            moisSuivant = false;
-                        }
-                        // if (compteurJour <= nbJoursEnCours && finMois == false){
-                        // }else{
-                        // }
-                    }
-                    //  Ecrit le quantième du jour
-                    if(moisSuivant == false){
-                        cell.classList.replace("horsMois","moisEnCours");
-                    }else {
                         cell.classList.replace("moisEnCours","horsMois");
-                    }
+                        }else {
+                            if(moisCourant == false && moisSuivant == true){
+                                cell.classList.replace("moisEnCours","horsMois");
+                                compteurJour++;
+                            }else{
+                                compteurJour++;
+                            }
+                            //  Ecrit le quantième du jour
+                        }
                     var cellText = document.createTextNode(compteurJour);
-                // }
             }
 
             cell.appendChild(cellText);
